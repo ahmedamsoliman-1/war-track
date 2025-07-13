@@ -1,0 +1,208 @@
+{
+  "info": {
+    "_postman_id": "f1c8d8f9-9f58-4a4b-bc63-8c0be3f55e01",
+    "name": "GlobalWarSystem",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "User Service",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUser}}/api/users/register",
+              "host": ["{{baseUser}}"],
+              "path": ["api", "users", "register"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user1@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"user\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.environment.set(\"jwt\", jsonData.token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUser}}/api/users/login",
+              "host": ["{{baseUser}}"],
+              "path": ["api", "users", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user1@example.com\",\n  \"password\": \"password123\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "War Service",
+      "item": [
+        {
+          "name": "Get All Wars",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseWar}}/api/wars",
+              "host": ["{{baseWar}}"],
+              "path": ["api", "wars"]
+            }
+          }
+        },
+        {
+          "name": "Create War",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseWar}}/api/wars",
+              "host": ["{{baseWar}}"],
+              "path": ["api", "wars"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Sample War\",\n  \"description\": \"A big conflict\",\n  \"startDate\": \"2020-01-01\",\n  \"endDate\": \"2021-01-01\",\n  \"involvedCountries\": [\"Country A\", \"Country B\"],\n  \"casualties\": 10000,\n  \"relatedWars\": [],\n  \"geoData\": {\n    \"type\": \"Polygon\",\n    \"coordinates\": [[[0,0],[0,1],[1,1],[1,0],[0,0]]]\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Get War by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseWar}}/api/wars/{{warId}}",
+              "host": ["{{baseWar}}"],
+              "path": ["api", "wars", "{{warId}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete War",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseWar}}/api/wars/{{warId}}",
+              "host": ["{{baseWar}}"],
+              "path": ["api", "wars", "{{warId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Discussion Service",
+      "item": [
+        {
+          "name": "Get All Discussions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseDiscussion}}/api/discussions",
+              "host": ["{{baseDiscussion}}"],
+              "path": ["api", "discussions"]
+            }
+          }
+        },
+        {
+          "name": "Create Discussion",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseDiscussion}}/api/discussions",
+              "host": ["{{baseDiscussion}}"],
+              "path": ["api", "discussions"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"warId\": \"{{warId}}\",\n  \"title\": \"Discussion about this war\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Add Comment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseDiscussion}}/api/discussions/{{discussionId}}/comments",
+              "host": ["{{baseDiscussion}}"],
+              "path": ["api", "discussions", "{{discussionId}}", "comments"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"This is a comment\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Discussion by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseDiscussion}}/api/discussions/{{discussionId}}",
+              "host": ["{{baseDiscussion}}"],
+              "path": ["api", "discussions", "{{discussionId}}"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+version: "3.8"
+services:
+  mongo:
+    image: mongo:6
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  war-service:
+    build: ./war-service
+    environment:
+      - MONGO_URI=$MONGO_URI_WAR
+      - JWT_SECRET=$JWT_SECRET
+    depends_on:
+      - mongo
+    ports:
+      - "4000:4000"
+
+  user-service:
+    build: ./user-service
+    environment:
+      - MONGO_URI=$MONGO_URI_USER
+      - JWT_SECRET=$JWT_SECRET
+    depends_on:
+      - mongo
+    ports:
+      - "4001:4001"
+
+  discussion-service:
+    build: ./discussion-service
+    environment:
+      - MONGO_URI=$MONGO_URI_DISC
+      - JWT_SECRET=$JWT_SECRET
+    depends_on:
+      - mongo
+    ports:
+      - "4002:4002"
+
+  api-gateway:
+    build: ./api-gateway
+    environment:
+      - USER_SERVICE_URL=http://user-service:4001
+      - WAR_SERVICE_URL=http://war-service:4000
+      - DISCUSSION_SERVICE_URL=http://discussion-service:4002
+      - JWT_SECRET=$JWT_SECRET
+    ports:
+      - "5000:5000"
+    depends_on:
+      - user-service
+      - war-service
+      - discussion-service
+
+volumes:
+  mongo_data:

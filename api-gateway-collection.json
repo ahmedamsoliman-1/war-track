@@ -1,0 +1,106 @@
+{
+  "info": {
+    "_postman_id": "a4efcb41-39de-4b7a-95f2-2eb31045a8b2",
+    "name": "Global War System - API Gateway",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "User Service",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": { "raw": "http://localhost:5000/api/users/register", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "users", "register"] }
+          }
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": { "raw": "http://localhost:5000/api/users/login", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "users", "login"] }
+          }
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "http://localhost:5000/api/users", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "users"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "War Service",
+      "item": [
+        {
+          "name": "Create War",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"World War II\",\n  \"description\": \"A global war from 1939 to 1945.\",\n  \"startDate\": \"1939-09-01\",\n  \"endDate\": \"1945-09-02\",\n  \"involvedCountries\": [\"Germany\", \"UK\", \"USA\"],\n  \"casualties\": 70000000\n}"
+            },
+            "url": { "raw": "http://localhost:5000/api/wars", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "wars"] }
+          }
+        },
+        {
+          "name": "Get All Wars",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": { "raw": "http://localhost:5000/api/wars", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "wars"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Discussion Service",
+      "item": [
+        {
+          "name": "Create Discussion",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"warId\": \"{{war_id}}\",\n  \"author\": \"testuser\",\n  \"content\": \"This war changed the world.\"\n}"
+            },
+            "url": { "raw": "http://localhost:5000/api/discussions", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "discussions"] }
+          }
+        },
+        {
+          "name": "Get Discussions",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": { "raw": "http://localhost:5000/api/discussions", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "discussions"] }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "jwt_token", "value": "" },
+    { "key": "war_id", "value": "" }
+  ]
+}
