@@ -6,13 +6,16 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - mongo_data:/data/db
+      - ./volumes/mongo_data:/data/db
 
   war-service:
     build: ./war-service
     environment:
       - MONGO_URI=$MONGO_URI_WAR
       - JWT_SECRET=$JWT_SECRET
+      - LOG_DIRECTORY=logs
+    volumes:
+      - ./volumes/logs/war-service:/app/logs
     depends_on:
       - mongo
     ports:
@@ -23,6 +26,9 @@ services:
     environment:
       - MONGO_URI=$MONGO_URI_USER
       - JWT_SECRET=$JWT_SECRET
+      - LOG_DIRECTORY=logs
+    volumes:
+      - ./volumes/logs/user-service:/app/logs
     depends_on:
       - mongo
     ports:
@@ -33,6 +39,9 @@ services:
     environment:
       - MONGO_URI=$MONGO_URI_DISC
       - JWT_SECRET=$JWT_SECRET
+      - LOG_DIRECTORY=logs
+    volumes:
+      - ./volumes/logs/discussion-service:/app/logs
     depends_on:
       - mongo
     ports:
@@ -45,6 +54,9 @@ services:
       - WAR_SERVICE_URL=http://war-service:4000
       - DISCUSSION_SERVICE_URL=http://discussion-service:4002
       - JWT_SECRET=$JWT_SECRET
+      - LOG_DIRECTORY=logs
+    volumes:
+      - ./volumes/logs/api-gateway:/app/logs
     ports:
       - "5000:5000"
     depends_on:

@@ -1,9 +1,16 @@
 import { createProxyMiddleware } from "http-proxy-middleware";
-import { logger } from "./utils/logger";
+import logger from "./utils/logger";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const userServiceUrl = process.env.USER_SERVICE_URL || "http://user-service:4001";
 const warServiceUrl = process.env.WAR_SERVICE_URL || "http://war-service:4000";
 const discussionServiceUrl = process.env.DISCUSSION_SERVICE_URL || "http://discussion-service:4002";
+
+console.log(`User Service URL: ${userServiceUrl}`);
+console.log(`War Service URL: ${warServiceUrl}`);
+console.log(`Discussion Service URL: ${discussionServiceUrl}`);
 
 export const userProxy = createProxyMiddleware({
   target: userServiceUrl,

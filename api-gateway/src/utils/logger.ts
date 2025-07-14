@@ -1,13 +1,26 @@
-import { createLogger, format, transports } from "winston";
+import { createLogger, transports, format } from "winston";
 
-export const logger = createLogger({
+const log_directory = process.env.LOG_DIRECTORY || "logs";
+
+const logger = createLogger({
   level: "info",
   format: format.combine(
     format.timestamp(),
+    format.errors({ stack: true }),
+    format.splat(),
     format.json()
   ),
   defaultMeta: { service: "api-gateway" },
   transports: [
-    new transports.Console()
+    new transports.Console({
+      format: format.combine(
+        format.colorize(),
+        format.simple()
+      )
+    }),
+    new transports.File({ filename: `${log_directory}/error.log`, level: "error" }),
+    new transports.File({ filename: `${log_directory}/combined.log` })
   ]
 });
+
+export default logger;

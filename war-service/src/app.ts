@@ -8,8 +8,8 @@ const app = express();
 
 app.use(express.json());
 
-app.use("/api/health", (req, res) => {
-  logger.info("Health check endpoint hit");
+
+app.use("/api/wars/health", (req, res) => {
   res.status(200).json({ status: "UP" });
 });
 

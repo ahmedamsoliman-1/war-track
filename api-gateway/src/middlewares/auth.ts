@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { logger } from "../utils/logger";
+import logger from "../utils/logger";
 
 export function verifyTokenMiddleware(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;

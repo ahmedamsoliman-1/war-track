@@ -8,7 +8,7 @@ const app = express();
 connectDB();
 
 app.use(express.json());
-app.use("/api/health", (req, res) => {
+app.use("/api/discussions/health", (req, res) => {
   res.status(200).json({ status: "UP" });
 });
 app.use("/api/discussions", discussionRoutes);
