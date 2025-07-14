@@ -9,7 +9,7 @@ services:
       - ./volumes/mongo_data:/data/db
 
   war-service:
-    build: ./war-service
+    build: ./services/war-service
     environment:
       - MONGO_URI=$MONGO_URI_WAR
       - JWT_SECRET=$JWT_SECRET
@@ -22,7 +22,7 @@ services:
       - "4000:4000"
 
   user-service:
-    build: ./user-service
+    build: ./services/user-service
     environment:
       - MONGO_URI=$MONGO_URI_USER
       - JWT_SECRET=$JWT_SECRET
@@ -35,7 +35,7 @@ services:
       - "4001:4001"
 
   discussion-service:
-    build: ./discussion-service
+    build: ./services/discussion-service
     environment:
       - MONGO_URI=$MONGO_URI_DISC
       - JWT_SECRET=$JWT_SECRET

@@ -1,10 +1,8 @@
 import app from "./app";
-import dotenv from "dotenv";
 import logger from "./utils/logger";
+import { config } from "./config";
 
-dotenv.config();
-
-const PORT = process.env.PORT || 4002;
+const PORT = config.server.port;
 
 app.listen(PORT, () => {
   logger.info(`Discussion Service running on port ${PORT}`);

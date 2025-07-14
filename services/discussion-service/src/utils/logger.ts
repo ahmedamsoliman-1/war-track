@@ -1,6 +1,7 @@
 import { createLogger, transports, format } from "winston";
+import { config } from "../config";
 
-const log_directory = process.env.LOG_DIRECTORY || "logs";
+const log_directory = config.log.directory;
 
 
 const logger = createLogger({
