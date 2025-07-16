@@ -10,10 +10,14 @@ app.use(express.json());
 
 
 app.use("/api/wars/health", (req, res) => {
+  logger.info("War Service health check endpoint hit");
   res.status(200).json({ status: "UP" });
 });
 
 app.use("/api/wars", warRoutes);
+
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api/wars/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 
 export default app;

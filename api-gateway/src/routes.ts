@@ -50,3 +50,44 @@ export const discussionProxy = createProxyMiddleware({
     res.status(502).json({ error: "Bad gateway" });
   }
 });
+
+
+export const userDocsProxy = createProxyMiddleware({
+  target: userServiceUrl,
+  changeOrigin: true,
+  pathRewrite: { "^/api/users/docs": "/api-docs" },
+  onProxyReq: (proxyReq, req) => {
+    logger.info(`Proxying ${req.method} ${req.originalUrl} -> User Service API Docs`);
+  },
+  onError: (err, req, res) => {
+    logger.error(`User Service docs proxy error: ${err.message}`);
+    res.status(502).json({ error: "Bad gateway" });
+  }
+});
+
+
+export const warDocsProxy = createProxyMiddleware({
+  target: warServiceUrl,
+  changeOrigin: true,
+  pathRewrite: { "^/api/wars/docs": "/api-docs" },
+  onProxyReq: (proxyReq, req) => {
+    logger.info(`Proxying ${req.method} ${req.originalUrl} -> War Service API Docs`);
+  },
+  onError: (err, req, res) => {
+    logger.error(`War Service docs proxy error: ${err.message}`);
+    res.status(502).json({ error: "Bad gateway" });
+  }
+});
+
+export const discussionDocsProxy = createProxyMiddleware({
+  target: discussionServiceUrl,
+  changeOrigin: true,
+  pathRewrite: { "^/api/discussions/docs": "/api-docs" },
+  onProxyReq: (proxyReq, req) => {
+    logger.info(`Proxying ${req.method} ${req.originalUrl} -> Discussion Service API Docs`);
+  },
+  onError: (err, req, res) => {
+    logger.error(`Discussion Service docs proxy error: ${err.message}`);
+    res.status(502).json({ error: "Bad gateway" });
+  }
+});
