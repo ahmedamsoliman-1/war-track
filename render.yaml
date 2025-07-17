@@ -9,4 +9,31 @@ services:
   dockerContext: .
   dockerfilePath: ./Dockerfile
   rootDir: api-gateway
+- type: web
+  name: war-discussion-service
+  runtime: docker
+  repo: https://github.com/ahmedamsoliman-1/war-track
+  plan: free
+  region: oregon
+  dockerContext: .
+  dockerfilePath: ./Dockerfile
+  rootDir: services/discussion-service
+- type: web
+  name: war-user-service
+  runtime: docker
+  repo: https://github.com/ahmedamsoliman-1/war-track
+  plan: free
+  region: oregon
+  dockerContext: .
+  dockerfilePath: ./Dockerfile
+  rootDir: services/user-service
+- type: web
+  name: war-war-service
+  runtime: docker
+  repo: https://github.com/ahmedamsoliman-1/war-track
+  plan: free
+  region: oregon
+  dockerContext: .
+  dockerfilePath: ./Dockerfile
+  rootDir: services/war-service
 version: "1"
